@@ -1,0 +1,5 @@
+The prometheus addon for istio is located at:
+manifest.yaml - https://raw.githubusercontent.com/istio/istio/release-$VERSION/samples/addons/prometheus.yaml
+
+Sample URL:
+https://raw.githubusercontent.com/istio/istio/release-1.7/samples/addons/prometheus.yaml

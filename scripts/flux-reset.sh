@@ -17,6 +17,6 @@ kubectl -n istio-system delete istiooperators.install.istio.io --all
 helm -n flux delete helm-operator
 helm -n istio-system delete flagger
 helm -n istio-system delete flagger-grafana
-kubectl delete ns istio-system
-kubectl delete ns istio-operator
-kubectl delete ns flux
+kubectl delete namespace istio-system
+kubectl delete namespace istio-operator
+kubectl delete namespace flux

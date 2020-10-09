@@ -19,19 +19,21 @@ REPO_ROOT="$(git rev-parse --show-toplevel)"
 TEMP="${REPO_ROOT}/temp"
 fluxNamespace="flux"
 istioNamespace="istio-system"
+fluxCDChartUrl="https://charts.fluxcd.io"
+helmOperatorCrdUrl="https://raw.githubusercontent.com/fluxcd/helm-operator/master/deploy/crds.yaml"
 
-kubectl delete ns ${fluxNamespace} || true
-kubectl delete clusterrole flux || true
-kubectl delete clusterrolebinding flux || true
-kubectl delete clusterrole helm-operator || true
-kubectl delete clusterrolebinding helm-operator || true
+#kubectl delete namespace ${fluxNamespace} || true
+#kubectl delete clusterrole flux || true
+#kubectl delete clusterrolebinding flux || true
+#kubectl delete clusterrole helm-operator || true
+#kubectl delete clusterrolebinding helm-operator || true
 
 rm -rf ${TEMP} && mkdir ${TEMP}
 
-helm repo add fluxcd https://charts.fluxcd.io
+helm repo add fluxcd ${fluxCDChartUrl}
 
 echo ">>> Installing Flux for ${REPO_URL} only watching istio paths"
-kubectl create ns ${fluxNamespace} || true
+kubectl create namespace ${fluxNamespace} || true
 helm upgrade -i flux fluxcd/flux --wait \
 --set git.url=${REPO_URL} \
 --set git.branch=${REPO_BRANCH} \
@@ -43,8 +45,7 @@ helm upgrade -i flux fluxcd/flux --wait \
 --namespace ${fluxNamespace}
 
 echo ">>> Installing Helm Operator"
-kubectl apply -f https://raw.githubusercontent.com/fluxcd/helm-operator/master/deploy/crds.yaml
-kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.7/samples/addons/prometheus.yaml
+kubectl apply -f ${helmOperatorCrdUrl}
 helm upgrade -i helm-operator fluxcd/helm-operator --wait \
 --set git.ssh.secretName=flux-git-deploy \
 --set helm.versions=v3 \

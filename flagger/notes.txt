@@ -1,0 +1,2 @@
+CRDS are located at:
+flagger-crds.yaml - https://github.com/weaveworks/flagger/blob/master/artifacts/flagger/crd.yaml

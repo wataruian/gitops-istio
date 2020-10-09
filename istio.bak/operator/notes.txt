@@ -1,0 +1,2 @@
+CRDS are located at:
+crds.yaml - https://github.com/istio/istio/blob/master/manifests/charts/istio-operator/crds/crd-operator.yaml
